@@ -1,13 +1,16 @@
 package com.mopub.mobileads;
 
+import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.ConsoleMessage;
 import android.webkit.JsResult;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
@@ -114,6 +117,7 @@ public class MraidView extends BaseWebView {
         mDisplayController = new MraidDisplayController(this, expStyle, buttonStyle);
         
         mWebViewClient = new MraidWebViewClient();
+        
         setWebViewClient(mWebViewClient);
         
         mWebChromeClient = new MraidWebChromeClient();
@@ -343,6 +347,12 @@ public class MraidView extends BaseWebView {
             Log.d(LOGTAG, message);
             return false;
         }
+        @TargetApi(Build.VERSION_CODES.FROYO)
+		@Override
+        public boolean onConsoleMessage(ConsoleMessage cm) {
+            Log.d("jsConsole", cm.message() + " >ln " + cm.lineNumber() + " of " + cm.sourceId() );
+            return true;
+        }    
     }
     
     public interface OnExpandListener {
