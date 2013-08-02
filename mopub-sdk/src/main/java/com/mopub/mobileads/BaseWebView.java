@@ -10,5 +10,7 @@ public class BaseWebView extends WebView {
          * an Activity context, as it will leak on Froyo devices and earlier.
          */
         super(context.getApplicationContext());
+        //Not for production:  (I\'m Testing ads)
+        this.clearCache(true);
     }
 }
