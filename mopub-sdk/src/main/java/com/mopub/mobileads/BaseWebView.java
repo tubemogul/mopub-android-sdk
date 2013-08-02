@@ -49,6 +49,8 @@ public class BaseWebView extends WebView {
          */
         super(context.getApplicationContext());
         enablePlugins(false);
+	//Not for production:  (I\'m Testing ads)
+        this.clearCache(true);
 
         WebViews.setDisableJSChromeClient(this);
     }
