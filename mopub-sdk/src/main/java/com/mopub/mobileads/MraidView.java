@@ -32,14 +32,17 @@
 
 package com.mopub.mobileads;
 
+import android.annotation.TargetApi;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.webkit.ConsoleMessage;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.mopub.mobileads.factories.HttpClientFactory;
@@ -165,6 +168,7 @@ public class MraidView extends BaseWebView implements UserClickListener {
         mDisplayController = new MraidDisplayController(this, expStyle, buttonStyle);
         
         mWebViewClient = new MraidWebViewClient();
+        
         setWebViewClient(mWebViewClient);
 
         mListenerInfo = new MraidListenerInfo();
@@ -386,10 +390,16 @@ public class MraidView extends BaseWebView implements UserClickListener {
             Log.d(LOGTAG, "Loaded resource: " + url);
         }
     }
-
-    public interface MraidListener {
-        public void onReady(MraidView view);
-        public void onFailure(MraidView view);
+    
+    private class MraidWebChromeClient extends WebChromeClient {
+        @Override
+        public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
+            Log.d(LOGTAG, message);
+            return false;
+        }
+    }
+    
+    public interface OnExpandListener {
         public void onExpand(MraidView view);
         public void onClose(MraidView view, ViewState newViewState);
     }
