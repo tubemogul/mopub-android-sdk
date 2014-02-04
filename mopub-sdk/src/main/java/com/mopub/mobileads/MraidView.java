@@ -397,6 +397,12 @@ public class MraidView extends BaseWebView implements UserClickListener {
             Log.d(LOGTAG, message);
             return false;
         }
+        @TargetApi(Build.VERSION_CODES.FROYO)
+		@Override
+        public boolean onConsoleMessage(ConsoleMessage cm) {
+            Log.d("jsConsole", cm.message() + " >ln " + cm.lineNumber() + " of " + cm.sourceId() );
+            return true;
+        }    
     }
     
     public interface OnExpandListener {
