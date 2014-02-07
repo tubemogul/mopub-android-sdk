@@ -32,6 +32,8 @@
 
 package com.mopub.mobileads;
 
+import com.mopub.mobileads.util.VersionCode;
+
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
@@ -39,6 +41,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -89,7 +92,6 @@ public class MraidBrowser extends Activity {
         initializeButtons();
         enableCookies();
     }
-
     private void initializeWebView(Intent intent) {
         WebSettings webSettings = mWebView.getSettings();
         
@@ -102,6 +104,10 @@ public class MraidBrowser extends Activity {
         webSettings.setSupportZoom(true);
         webSettings.setBuiltInZoomControls(true);
         webSettings.setUseWideViewPort(true);
+        
+        if (VersionCode.currentApiLevel().isAtLeast(VersionCode.JELLY_BEAN_MR1)) {
+        	webSettings.setMediaPlaybackRequiresUserGesture(false);
+        }
         
         mWebView.loadUrl(intent.getStringExtra(URL_EXTRA));
         mWebView.setWebViewClient(new WebViewClient() {

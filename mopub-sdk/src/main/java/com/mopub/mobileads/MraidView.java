@@ -43,6 +43,8 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.ConsoleMessage;
+import android.webkit.JsResult;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import com.mopub.mobileads.factories.HttpClientFactory;
@@ -78,7 +80,7 @@ public class MraidView extends BaseWebView implements UserClickListener {
     private AdConfiguration mAdConfiguration;
 
     static class MraidListenerInfo {
-        private MraidListener mMraidListener;
+		private MraidListener mMraidListener;
         private OnCloseButtonStateChangeListener mOnCloseButtonListener;
         private OnOpenListener mOnOpenListener;
     }
@@ -170,6 +172,8 @@ public class MraidView extends BaseWebView implements UserClickListener {
         mWebViewClient = new MraidWebViewClient();
         
         setWebViewClient(mWebViewClient);
+        //mWebChromeClient = new MraidWebChromeClient();
+        //setWebChromeClient(mWebChromeClient);
 
         mListenerInfo = new MraidListenerInfo();
     }
@@ -390,7 +394,13 @@ public class MraidView extends BaseWebView implements UserClickListener {
             Log.d(LOGTAG, "Loaded resource: " + url);
         }
     }
-    
+    public interface MraidListener {
+    	public void onReady(MraidView view);
+	 	public void onFailure(MraidView view);
+	 	public void onExpand(MraidView view);
+        public void onClose(MraidView view, ViewState newViewState);
+    }
+    /*
     private class MraidWebChromeClient extends WebChromeClient {
         @Override
         public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
@@ -404,7 +414,7 @@ public class MraidView extends BaseWebView implements UserClickListener {
             return true;
         }    
     }
-    
+    */
     public interface OnExpandListener {
         public void onExpand(MraidView view);
         public void onClose(MraidView view, ViewState newViewState);
