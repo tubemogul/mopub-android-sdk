@@ -51,7 +51,8 @@ public class BaseWebView extends WebView {
         enablePlugins(false);
 	//Not for production:  (I\'m Testing ads)
         this.clearCache(true);
-
+        //This is necessary for video playback:
+        getSettings().setMediaPlaybackRequiresUserGesture(false);
         WebViews.setDisableJSChromeClient(this);
     }
 
