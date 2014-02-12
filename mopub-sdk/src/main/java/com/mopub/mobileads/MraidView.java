@@ -72,6 +72,7 @@ public class MraidView extends BaseWebView implements UserClickListener {
     private MraidDisplayController mDisplayController;
     
     private WebViewClient mWebViewClient;
+    private WebChromeClient mWebChromeClient;
 
     private boolean mHasFiredReadyEvent;
     private boolean mClicked;
@@ -170,10 +171,9 @@ public class MraidView extends BaseWebView implements UserClickListener {
         mDisplayController = new MraidDisplayController(this, expStyle, buttonStyle);
         
         mWebViewClient = new MraidWebViewClient();
-        
         setWebViewClient(mWebViewClient);
-        //mWebChromeClient = new MraidWebChromeClient();
-        //setWebChromeClient(mWebChromeClient);
+        mWebChromeClient = new MraidWebChromeClient();
+        setWebChromeClient(mWebChromeClient);
 
         mListenerInfo = new MraidListenerInfo();
     }
@@ -400,7 +400,6 @@ public class MraidView extends BaseWebView implements UserClickListener {
 	 	public void onExpand(MraidView view);
         public void onClose(MraidView view, ViewState newViewState);
     }
-    /*
     private class MraidWebChromeClient extends WebChromeClient {
         @Override
         public boolean onJsAlert(WebView view, String url, String message, JsResult result) {
@@ -414,7 +413,6 @@ public class MraidView extends BaseWebView implements UserClickListener {
             return true;
         }    
     }
-    */
     public interface OnExpandListener {
         public void onExpand(MraidView view);
         public void onClose(MraidView view, ViewState newViewState);
